@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
+import { Input, Button } from '@mui/material';
 
 export default function HomePage() {
   const [message, setMessage] = useState('')
@@ -43,8 +44,8 @@ export default function HomePage() {
         />
         <hr />
         <h2 className=''>Enter your message:</h2>
-        <input type="text" value={message} onChange={(e)=>{setMessage(e.target.value)}} />
-        <button onClick={onSubmit}>Enviar</button>
+        <Input type="text" value={message} onChange={(e)=>{setMessage(e.target.value)}}></Input>
+        <Button className='bg-green-500 text-white' onClick={onSubmit}>Enviar</Button>
         <hr />
         <h2>Messages</h2>
         <ul>
