@@ -1,18 +1,13 @@
-import React from 'react'
+import { useEffect, useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
 
 export default function HomePage() {
-  const [message, setMessage] = React.useState('')
-  const [messages, setMessages] = React.useState([])
+  const [message, setMessage] = useState('')
+  const [messages, setMessages] = useState([])
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setMessage(e.target.value)
-
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
+  const onSubmit = () => {
     window.ipc.send('add-message', message)
     setMessages([...messages, message])
     setMessage('')
@@ -23,7 +18,7 @@ export default function HomePage() {
     setMessages(messages.filter((_, i) => i !== index))
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.ipc.on('messages', (messages: string[]) => {
       setMessages(messages)
     })
@@ -32,7 +27,7 @@ export default function HomePage() {
   }, [])
 
   return (
-    <React.Fragment>
+    <div>
       <Head>
         <title>Home - Nextron (basic-store-data)</title>
       </Head>
@@ -48,9 +43,8 @@ export default function HomePage() {
         />
         <hr />
         <h2 className=''>Enter your message:</h2>
-        <form onSubmit={onSubmit}>
-          <input type="text" value={message} onChange={onChange} />
-        </form>
+        <input type="text" value={message} onChange={(e)=>{setMessage(e.target.value)}} />
+        <button onClick={onSubmit}>Enviar</button>
         <hr />
         <h2>Messages</h2>
         <ul>
@@ -62,6 +56,6 @@ export default function HomePage() {
           ))}
         </ul>
       </div>
-    </React.Fragment>
+    </div>
   )
 }
