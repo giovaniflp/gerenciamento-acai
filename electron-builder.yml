@@ -1,6 +1,6 @@
-appId: com.example.nextron
-productName: My Nextron App
-copyright: Copyright © 2018 Yoshihide Shiono
+appId: com.giovaniflp.gerenciamentoAcai
+productName: Gerenciamento Açaí
+copyright: Copyright © 2024 Giovani Feitosa Leal Pereira
 directories:
   output: dist
   buildResources: resources

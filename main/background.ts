@@ -37,23 +37,29 @@ app.on('window-all-closed', () => {
 })
 
 type StoreType = {
-  messages: string[]
+  products: Object[]
 }
 
-const store = new Store<StoreType>({ name: 'messages' })
+const store = new Store<StoreType>({ name: 'products' })
 
-ipcMain.on('get-messages', (event) => {
-  event.reply('messages', store.get('messages') || [])
+ipcMain.on('get-products', (event) => {
+  event.reply('products', store.get('products') || [])
 })
 
-ipcMain.on('add-message', (_event, arg) => {
-  const messages = store.get('messages') || []
-  messages.push(arg)
-  store.set('messages', messages)
+ipcMain.on('add-products', (_event, arg: Object) => {
+  const products = store.get('products') || []
+  products.push(arg)
+  store.set('products', products)
 })
 
-ipcMain.on("remove-message", (_event, arg) => {
-  const messages = store.get("messages") || [];
-  messages.splice(arg, 1);
-  store.set("messages", messages);
+ipcMain.on("remove-products", (_event, arg) => {
+  const products = store.get("products") || [];
+  products.splice(arg, 1);
+  store.set("products", products);
+})
+
+ipcMain.on('edit-products', (_event, index, request) => {
+  const products = store.get('products') || []
+  products[index] = request
+  store.set('products', products)
 })
